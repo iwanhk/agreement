@@ -9,8 +9,8 @@ def main():
 
     try:
         if active_network in LOCAL_NETWORKS:
-            nft=Agreement.deploy(addr(admin))
-            asset= Asset.deploy(addr(admin))
+            nft = Agreement.deploy(addr(admin))
+            asset = Asset.deploy(addr(admin))
 
             asset.mint(addr(creator))
             asset.mint(addr(iwan))
@@ -26,15 +26,13 @@ def main():
             # print(nft.agreement(1))
 
             with open('BYC#3769.txt', 'r') as f:
-                terms= f.read()
-                nft.create(terms, chain.time()+ 60*60*24*365, [creator], [asset], addr(iwan))
+                terms = f.read()
+                nft.create("BYC#3769 Agreement", terms, chain.time() +
+                           60*60*24*365, [creator], [asset], addr(iwan))
             nft.sign(0, [(asset, 0)], addr(creator))
 
-
-
         if active_network in TEST_NETWORKS:
-            nft=Agreement.deploy(addr(admin))
-            
+            nft = Agreement.deploy(addr(admin))
 
     except Exception:
         console.print_exception()
