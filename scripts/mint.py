@@ -25,14 +25,25 @@ def main():
             # nft.sign(1, addr(admin))
             # print(nft.agreement(1))
 
-            with open('BYC#3769.txt', 'r') as f:
+            with open('BAYC#3769.txt', 'r') as f:
                 terms = f.read()
-                nft.create("BYC#3769 Agreement", terms, chain.time() +
-                           60*60*24*365, [creator], [asset], addr(iwan))
+                nft.create("BAYC#3769 Agreement", terms, chain.time() +
+                           60*60*24*365*3, [creator], [asset], addr(iwan))
             nft.sign(0, [(asset, 0)], addr(creator))
 
         if active_network in TEST_NETWORKS:
-            nft = Agreement.deploy(addr(admin))
+            nft = Agreement[-1]
+            with open('BAYC#3769.txt', 'r') as f:
+                terms = f.read()
+                nft.create("BAYC#3769 Agreement", "TERMS", chain.time() + 60*60*24*365*3, [
+                           "0xAb1fdD3F84b2019BEF47939E66fb6194532f9640"], ["0x85a91119ECBe6641401A33b1418A90FEa8066d85"], addr(iwan))
+
+        if active_network in REAL_NETWORKS:
+            nft = Agreement[-1]
+            with open('BAYC#3769.txt', 'r') as f:
+                terms = f.read()
+                nft.create("BAYC#3769 Agreement", terms, chain.time() + 60*60*24*365*3, [
+                           "0x7eE5eA1f769703B755A2F7A7C76E9C00fd2aB8C7"], ["0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"], addr(iwan))
 
     except Exception:
         console.print_exception()

@@ -112,7 +112,7 @@ contract Agreement is ERC721A {
         tokenExist(tokenId)
         returns (string memory)
     {
-        bytes memory _content = bytes(agreement(tokenId));
+        bytes memory _content = bytes(terms(tokenId));
         uint256 _height = (_content.length * 37) / 30;
 
         if (_height < 500) {
@@ -150,7 +150,7 @@ contract Agreement is ERC721A {
             );
     }
 
-    function agreement(uint256 tokenId)
+    function terms(uint256 tokenId)
         public
         view
         tokenExist(tokenId)

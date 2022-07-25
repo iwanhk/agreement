@@ -9,22 +9,13 @@ def main():
 
     try:
         if active_network in LOCAL_NETWORKS:
-            # nft=NFT.deploy(10000, 3125, 3, "http://isotop.top/", addr(admin))
-            nft=NFT.deploy(4, 2, 2, "http://drzu.xyz/", addr(admin))
-            nft.setupNonAuctionSaleInfo(0, chain.time())
-            nft._setBaseURI('https://nftstorage.link/ipfs/bafybeieql76byscmmgymgactbqnoyucgx7p7o5ak5ts5tmwuonv7wee2le/')
-
+            nft = Agreement.deploy(addr(admin))
         if active_network in TEST_NETWORKS:
-            nft=NFT.deploy(4, 2, 2, "http://drzu.xyz/", addr(admin))
-            nft.setupNonAuctionSaleInfo(0, chain.time())
-            nft._setBaseURI('https://nftstorage.link/ipfs/bafybeieql76byscmmgymgactbqnoyucgx7p7o5ak5ts5tmwuonv7wee2le/')
-        
+            nft = Agreement.deploy(addr(admin))
         if active_network in REAL_NETWORKS:
-            # nft=NFT.deploy(10000, 3125, 3, "http://isotop.top/", addr(admin))
-            nft=NFT.deploy(4, 2, 2, "http://drzu.xyz/", addr(admin))
-            nft.setupNonAuctionSaleInfo(0, chain.time())
-            nft._setBaseURI('https://nftstorage.link/ipfs/bafybeieql76byscmmgymgactbqnoyucgx7p7o5ak5ts5tmwuonv7wee2le/')
-
+            nft = Agreement.deploy(addr(admin))
+            # 0x7eE5eA1f769703B755A2F7A7C76E9C00fd2aB8C7
+            
     except Exception:
         console.print_exception()
         # Test net contract address
