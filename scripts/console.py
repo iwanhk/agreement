@@ -9,10 +9,11 @@ def main():
 
     try:
         if active_network in LOCAL_NETWORKS:
-            nft=Agreement.deploy(addr(admin))
+            nft = Agreement.deploy(addr(admin))
             nft = Agreement[-1]
         if active_network in TEST_NETWORKS:
             nft = Agreement[-1]
+            asset = Asset[-1]
 
     except Exception:
         console.print_exception()

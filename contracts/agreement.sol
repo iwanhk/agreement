@@ -112,33 +112,63 @@ contract Agreement is ERC721A {
         tokenExist(tokenId)
         returns (string memory)
     {
-        bytes memory _content = bytes(terms(tokenId));
-        uint256 _height = (_content.length * 37) / 30;
+        bytes memory _parties = "";
+        bytes memory _assets = "";
+        uint256 i;
 
-        if (_height < 500) {
-            _height = 500;
+        uint256 _partyNum = nft[tokenId].party.length;
+        for (i = 0; i < _partyNum; i++) {
+            _parties = abi.encodePacked(
+                _parties,
+                '{"trait_type": "SIGNED-BY", "value": "',
+                uint160(nft[tokenId].party[i]).toHexString(),
+                '"},'
+            );
         }
 
-        bytes memory _svg = abi.encodePacked(
-            '<svg baseProfile="tiny" width="500" height="',
-            _height.toString(),
-            '" viewBox="0 0 500 ',
-            _height.toString(),
-            '" fill="none" xmlns="http://www.w3.org/2000/svg"><foreignObject x="10" y="10" width="480" height="',
-            _height.toString(),
-            '"><p align="left" style= "white-space:pre-wrap; line-height: 35px; font-family:Courier;">',
-            _content,
-            "</p></foreignObject></svg>"
-        );
+        bytes32[] memory _keys = nft[tokenId].assets;
+        for (i = 0; i < _keys.length; i++) {
+            Asset memory _asset = assetPool[_keys[i]];
+            if (_verifyAsset(_asset, tokenId)) {
+                _assets = abi.encodePacked(
+                    _assets,
+                    '{"trait_type": "ASSET-VERIFIED", "value": "',
+                    uint160(_asset.a).toHexString(),
+                    " #",
+                    _asset.i.toString(),
+                    " Owner: ",
+                    uint160(_asset.o).toHexString(),
+                    '"},'
+                );
+            }
+        }
+
+        string memory status = "Pending";
+        if (nft[tokenId].party.length == nft[tokenId].partyList.length + 1) {
+            status = "Valid";
+        }
+
+        if (nft[tokenId].signDate >= nft[tokenId].dueDate) {
+            status = "Expired";
+        }
 
         bytes memory meta = abi.encodePacked(
             '{"name": "',
             nft[tokenId].name,
             '", "description": "A Smart Agreement NFT", ',
-            '"image_data": "',
-            "data:image/svg+xml;base64,",
-            Base64.encode(abi.encodePacked(_svg)),
-            '", "designer": "LUCA355.xyz"}'
+            '"image": "',
+            nft[tokenId].terms,
+            '", "designer": "drzu.xyz",',
+            '"attributes": [{"trait_type": "SIGN-DATE", "value": "',
+            nft[tokenId].signDate.toString(),
+            '"},{"trait_type": "DUE-DATE", "value": "',
+            nft[tokenId].dueDate.toString(),
+            '"},',
+            _parties,
+            _assets,
+            '{"trait_type": "STATUS", "value": "',
+            status,
+            '"}]}'
         );
 
         return
@@ -168,17 +198,17 @@ contract Agreement is ERC721A {
         }
 
         bytes memory _buffer = abi.encodePacked(
-            "-----",
+            "[CONTRACT NAME]: ",
             nft[tokenId].name,
-            "-----\n",
+            "\n[CONTRACT TERMS]: ",
             nft[tokenId].terms,
             "\n[CONTRACT STATUS]: ",
             status,
-            "\nSinged-Due Date: ",
+            "\n[SIGN DATE]: ",
             nft[tokenId].signDate.toString(),
             "-",
             nft[tokenId].dueDate.toString(),
-            "\nSigned By:\n"
+            "\nS[IGNED BY]:\n"
         );
 
         uint256 _partyNum = nft[tokenId].party.length;
@@ -195,7 +225,7 @@ contract Agreement is ERC721A {
             return string(_buffer);
         }
 
-        _buffer = abi.encodePacked(_buffer, "Assets Included:\n");
+        _buffer = abi.encodePacked(_buffer, "[ASSETS]:\n");
 
         for (i = 0; i < _keys.length; i++) {
             Asset memory _asset = assetPool[_keys[i]];
