@@ -1,0 +1,36 @@
+{
+    "name": "BAYC#3769 Agreement",
+    "description": "A Smart Agreement NFT",
+    "image": "ipfs://bafybeifl2atgcglqswtsqmn5uh4vft74qanac7yxeues4xq5etjmbmvrri",
+    "designer": "drzu.xyz",
+    "attributes": [
+        {
+            "trait_type": "SIGN-DATE",
+            "value": "1658878679"
+        },
+        {
+            "trait_type": "DUE-DATE",
+            "value": "1753486679"
+        },
+        {
+            "trait_type": "SIGNED-BY",
+            "value": "0x8ce68c53ec6c8a55a32dd6c84c9207bfbd901eab"
+        },
+        {
+            "trait_type": "SIGNED-BY",
+            "value": "0xab1fdd3f84b2019bef47939e66fb6194532f9640"
+        },
+        {
+            "trait_type": "ASSET-VERIFIED",
+            "value": "0xbb66a5ce6db45a246d03445110daaf948d4a538e #1 Owner: 0x8ce68c53ec6c8a55a32dd6c84c9207bfbd901eab"
+        },
+        {
+            "trait_type": "ASSET-VERIFIED",
+            "value": "0xbb66a5ce6db45a246d03445110daaf948d4a538e #0 Owner: 0xab1fdd3f84b2019bef47939e66fb6194532f9640"
+        },
+        {
+            "trait_type": "STATUS",
+            "value": "Valid"
+        }
+    ]
+}

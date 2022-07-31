@@ -8,8 +8,8 @@ def main():
     admin, creator, consumer, iwan = get_accounts(active_network)
 
     try:
-        nft = NFT.deploy(addr(admin))
-        flat_contract('NFT', NFT.get_verification_info())
+        nft = Agreement.deploy(addr(admin))
+        flat_contract('NFT', Agreement.get_verification_info())
 
     except Exception:
         console.print_exception()
