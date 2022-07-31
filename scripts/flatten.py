@@ -9,7 +9,7 @@ def main():
 
     try:
         nft = Agreement.deploy(addr(admin))
-        flat_contract('NFT', Agreement.get_verification_info())
+        flat_contract('Agreement', Agreement.get_verification_info())
 
     except Exception:
         console.print_exception()
